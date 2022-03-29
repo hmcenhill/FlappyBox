@@ -4,15 +4,25 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Vector2 jumpPower = Vector2.up * 5f;
+    private Rigidbody2D rb;
+
+    private void Awake()
     {
-        
+        rb = this.GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        //TODO: Change input control
+        if (Input.GetButtonDown("Fire1"))
+        {
+            Jump();
+        }
+    }
+
+    private void Jump()
+    {
+        rb.velocity = jumpPower;
     }
 }
