@@ -6,7 +6,12 @@ public class BlockerController : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 3f;
 
-    public void SetValues()
+    private void Start()
+    {
+        SetValues();
+    }
+
+    private void SetValues()
     {
         this.transform.position = new Vector3(14f, Random.Range(-4f, 4f), 0f);
         moveSpeed *= GameManager.Instance.Difficulty;

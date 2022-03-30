@@ -6,9 +6,7 @@ public class ScreenBoundary : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D other)
     {
-        var player = other.GetComponent<PlayerController>();
-
-        if (player != null)
+        if (other.GetComponent<PlayerController>() != null)
         {
             GameManager.Instance.GameOver();
         }

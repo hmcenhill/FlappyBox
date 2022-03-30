@@ -12,7 +12,7 @@ public class BlockerSpawner : MonoBehaviour
     private IEnumerator SpawnBlocker()
     {
         yield return new WaitForSeconds(spawnRate);
-        Instantiate(blockerPrefab, this.transform).SetValues();
+        Instantiate(blockerPrefab, this.transform);
         StartCoroutine(nameof(SpawnBlocker));
     }
 }

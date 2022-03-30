@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -13,26 +8,33 @@ public class GameManager : MonoBehaviour
     public float Difficulty { get => difficulty; }
     private float difficulty;
 
+
     [SerializeField] private float timeBeforeNextDifficulty = 15f;
     [SerializeField] private float difficultyIncreaseAmount = 0.1f;
     [SerializeField] private BlockerSpawner spawner;
 
-
     private void Awake()
     {
-        if(Instance != null)
+        if (Instance == null)
         {
-            Destroy(this.gameObject);
+            Instance = this;
         }
         else
         {
-            Instance = this;
+            Destroy(this.gameObject);
         }
     }
 
     private void Start()
     {
+        StartGame();
+    }
+
+    private void StartGame()
+    {
         difficulty = 1f;
+        ScoreKeeper.Instance.ResetScore();
+
         StartCoroutine(nameof(IncreaseDifficulty));
         spawner.StartSpawner();
     }
@@ -49,4 +51,6 @@ public class GameManager : MonoBehaviour
         StopCoroutine(nameof(IncreaseDifficulty));
         Debug.Log("Game Over!!");
     }
+
+    public void ScorePoint() => ScoreKeeper.Instance.ScorePoint(difficulty);
 }
