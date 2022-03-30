@@ -5,7 +5,10 @@ public class ScoreKeeper : MonoBehaviour
 {
     public static ScoreKeeper Instance;
 
+    public int Score { get => (int)score; }
     private float score;
+
+    public int HighScore { get => (int)highScore; }
     private float highScore;
 
     [SerializeField] private TextMeshProUGUI scoreDisplay;

@@ -8,10 +8,11 @@ public class GameManager : MonoBehaviour
     public float Difficulty { get => difficulty; }
     private float difficulty;
 
-
     [SerializeField] private float timeBeforeNextDifficulty = 15f;
     [SerializeField] private float difficultyIncreaseAmount = 0.1f;
+    [SerializeField] private PlayerController player;
     [SerializeField] private BlockerSpawner spawner;
+    [SerializeField] private UIController ui;
 
     private void Awake()
     {
@@ -27,12 +28,15 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        StartGame();
+        ui.ShowGameStart();
     }
 
-    private void StartGame()
+    public void StartGame()
     {
         difficulty = 1f;
+
+        player.StartGame();
+        ui.ShowScores();
         ScoreKeeper.Instance.ResetScore();
 
         StartCoroutine(nameof(IncreaseDifficulty));
@@ -49,7 +53,9 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         StopCoroutine(nameof(IncreaseDifficulty));
-        Debug.Log("Game Over!!");
+        player.StopGame();
+        spawner.GameOver();
+        ui.ShowGameOver();
     }
 
     public void ScorePoint() => ScoreKeeper.Instance.ScorePoint(difficulty);

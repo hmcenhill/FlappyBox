@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -8,6 +6,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float recoverSpeed = 0.2f;
     private Rigidbody2D rb;
 
+    private bool playing = false;
+
     private void Awake()
     {
         rb = this.GetComponent<Rigidbody2D>();
@@ -15,17 +15,32 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if(this.transform.position.x < 0f)
+        if (playing)
         {
-            MoveForward();
-        }
+            if (this.transform.position.x < 0f)
+            {
+                MoveForward();
+            }
 
-        //TODO: Change input control
-        if (Input.GetButtonDown("Fire1"))
+            //TODO: Change input control
+            if (Input.GetButtonDown("Fire1"))
+            {
+                Jump();
+            }
+        }
+        else
         {
-            Jump();
+            this.transform.position = Vector3.zero;
+            if (Input.GetButtonDown("Fire1"))
+            {
+                GameManager.Instance.StartGame();
+                Jump();
+            }
         }
     }
+
+    public void StartGame() => playing = true;
+    public void StopGame() => playing = false;
 
     private void Jump()
     {
